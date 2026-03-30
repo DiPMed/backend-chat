@@ -1,0 +1,10 @@
+_build
+
+.idea
+.vscode
+.cursor
+.DS_Store
+.claude
+
+.env
+.env.*
