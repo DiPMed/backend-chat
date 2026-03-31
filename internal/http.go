@@ -25,6 +25,7 @@ func NewServer(provider llm.Provider, store sessions.Store) *Server {
 func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("GET /health", s.handleHealth)
 	s.mux.HandleFunc("POST /chat", s.handleChat)
+	s.mux.Handle("GET /openapi.yaml", http.FileServer(http.Dir("api")))
 }
 
 func (s *Server) Handler() http.Handler {
