@@ -1,0 +1,62 @@
+openapi: "3.0.3"
+info:
+  title: DiPMed Chat API
+  version: "0.1.0"
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+
+  /chat:
+    post:
+      summary: Send a chat message and stream the response
+      description: |
+        Streams newline-delimited JSON (application/x-ndjson).
+        The first chunk contains the session_id, followed by content chunks, and a final done chunk.
+        Omit session_id to start a new conversation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: Streaming response
+          content:
+            application/x-ndjson:
+              schema:
+                $ref: "#/components/schemas/ChatChunk"
+        "400":
+          description: Invalid request
+        "404":
+          description: Session not found
+
+components:
+  schemas:
+    ChatRequest:
+      type: object
+      required: [message]
+      properties:
+        session_id:
+          type: string
+          description: Omit to create a new session
+        message:
+          type: string
+
+    ChatChunk:
+      type: object
+      description: Each line in the NDJSON stream is one of these
+      properties:
+        session_id:
+          type: string
+        content:
+          type: string
+        error:
+          type: string
+        done:
+          type: boolean
