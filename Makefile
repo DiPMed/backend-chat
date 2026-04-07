@@ -4,7 +4,7 @@ build:
 	go build -o _build/server ./cmd/server
 
 run: build
-	./_build/server configs/dev.yaml
+	ACTIVE_ENV=DEV ./_build/server
 
 tidy:
 	go mod tidy
