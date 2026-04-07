@@ -1,0 +1,5 @@
+[build]
+cmd = "go build -o _build/server ./cmd/server"
+bin = "_build/server"
+include_ext = ["go", "yaml"]
+exclude_dir = ["_build"]

@@ -32,3 +32,24 @@ curl -N -X POST http://localhost:8080/chat \
   -H "Content-Type: application/json" \
   -d '{"session_id": "<id>", "message": "Tell me more"}'
 ```
+
+## Deployment
+
+The Docker image is built and pushed to GHCR on every merge to main.
+
+```bash
+docker pull ghcr.io/dipmed/backend-chat:latest
+```
+
+Create a `.env` file with the required secrets:
+
+```sh
+LLM_API_KEY="your-gemini-api-key"
+ACTIVE_ENV="prod"
+```
+
+Run with docker compose:
+
+```bash
+docker compose up -d
+```

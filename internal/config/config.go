@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"gopkg.in/yaml.v3"
 )
@@ -30,6 +31,14 @@ func (c *Config) Validate() error {
 		return fmt.Errorf("llm.api_key is required")
 	}
 	return nil
+}
+
+func ConfigPath() (string, error) {
+	env := os.Getenv("ACTIVE_ENV")
+	if env == "" {
+		return "", fmt.Errorf("ACTIVE_ENV is required (e.g. DEV, PROD)")
+	}
+	return fmt.Sprintf("configs/%s.yaml", strings.ToLower(env)), nil
 }
 
 func ReadConfig(path string) (*Config, error) {
